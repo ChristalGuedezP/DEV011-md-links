@@ -1,8 +1,8 @@
 //este es el archivo ejecutableeeeeeee
-const { mdLinks } = require("..");
+const { mdLinks } = require(".");
 
 const validateLinks = process.argv.includes("--validate")
-//console.log('Soy el process argv: ', process.argv);
+console.log('Soy el process argv: ', process.argv);
 const ruta = process.argv[2]
 console.log(validateLinks, ruta);
 

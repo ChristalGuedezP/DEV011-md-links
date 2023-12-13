@@ -1,4 +1,4 @@
-const { convertAbsolute, isValidMdFile, readFileContent, extractLinks } = require('./src/functions');
+const { convertAbsolute, isValidMdFile, readFileContent, extractLinks } = require('./functions');
 
 function mdLinks(path) {
   return new Promise((resolve, reject) => {
