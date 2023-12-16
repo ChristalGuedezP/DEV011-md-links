@@ -24,3 +24,20 @@ describe('convertAbsolute', () => {
     expect(convertAbsolute(relativePath)).toBe(expectedPath);
   });
 });
+describe('extractLinks', () => {
+  const sampleContent = `
+    [Link 1](https://example.com/link1)
+    [Link 2](https://example.com/link2)
+    [Invalid Link](https://invalid-url)
+  `;
+
+  test('should extract links without validation', async () => {
+    const links = await extractLinks(sampleContent, 'sample.md');
+    console.log('Links without validation:', links);
+    expect(links).toEqual([
+      { text: 'Link 1', href: 'https://example.com/link1', file: 'sample.md' },
+      { text: 'Link 2', href: 'https://example.com/link2', file: 'sample.md' },
+      { text: 'Invalid Link', href: 'https://invalid-url', file: 'sample.md' },
+    ]);
+  });
+});
