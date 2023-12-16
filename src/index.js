@@ -1,17 +1,17 @@
-const { convertAbsolute, isValidMdFile, readFileContent, extractLinks } = require('./functions');
+const { convertAbsolute, isValidMdFile, readFileContent, extractLinks } = require("./functions");
 
-function mdLinks(path) {
+function mdLinks(path, validate = false) {
   return new Promise((resolve, reject) => {
     const convertedRoute = convertAbsolute(path);
 
     if (!isValidMdFile(convertedRoute)) {
-      reject(new Error('El archivo no es de tipo Markdown (.md)'));
+      reject(new Error("El archivo no es de tipo Markdown (.md)"));
       return;
     }
 
     readFileContent(convertedRoute)
       .then((content) => {
-        const links = extractLinks(content, convertedRoute);
+        const links = extractLinks(content, convertedRoute, validate);
         resolve(links);
       })
       .catch((error) => {
@@ -19,13 +19,7 @@ function mdLinks(path) {
       });
   });
 }
-  //  const validateAbsolute = isAbsolutePath(path)
-  //     if (validateAbsolute) {
-  //       resolve(validateAbsolute)
-  //     }else{
-  //       reject(validateAbsolute)//al no ser absoluta lo rechaza a pesar de tener lo mismo
-  
- 
-  module.exports = {
-    mdLinks
-  }
+
+module.exports = {
+  mdLinks,
+};

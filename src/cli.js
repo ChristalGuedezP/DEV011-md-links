@@ -1,15 +1,12 @@
 //este es el archivo ejecutableeeeeeee
 const { mdLinks } = require(".");
+const path = require("path");
 
-const validateLinks = process.argv.includes("--validate")
-console.log('Soy el process argv: ', process.argv);
-const ruta = process.argv[2]
-console.log(validateLinks, ruta);
+const ruta = process.argv[2];
 
+// Verificar si se proporciona el parámetro --validate
+const validateLinks = process.argv.includes("--validate");
 
-mdLinks('src/pruebas.md')
-//mdLinks('C:/Users/chris/OneDrive/Documentos/DEV011-md-links/docs/04-milestone.md')
-//mdLinks(ruta)
-//mdLinks(ruta, { validate: validateLinks })
-.then(res => console.log("esta es la respuesta", res))
-.catch(err => console.log("este es el error", err))
+mdLinks(ruta, validateLinks)
+  .then((res) => console.log("Esta es la respuesta", res))
+  .catch((err) => console.log("Este es el error", err));
