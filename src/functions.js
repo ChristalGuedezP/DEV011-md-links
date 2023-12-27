@@ -2,6 +2,7 @@
 const path = require('path');
 const fs = require('fs').promises;
 const axios = require('axios');
+const { mdLinks } = require('.');
 
 const isAbsolutePath = (route) => path.isAbsolute(route);
 const convertAbsolute = (route) => (isAbsolutePath(route) ? route : path.resolve(route));
@@ -46,4 +47,5 @@ module.exports = {
   isValidMdFile,
   readFileContent,
   extractLinks,
+  mdLinks,
 };
