@@ -20,5 +20,16 @@
     "jsdom": "^23.0.1",
     "markdown-it": "^14.0.0",
     "marked": "^11.1.0"
+  },
+  "description": "A tool for checking links in main",
+  "main": "src/cli.js",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "author": "Christal Guédez",
+  "license": "ISC",
+  "bin": {
+    "md-links": "./src/cli.js"
   }
 }

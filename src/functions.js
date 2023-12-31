@@ -2,7 +2,7 @@
 const path = require('path');
 const fs = require('fs').promises;
 const axios = require('axios');
-const { mdLinks } = require('.');
+// const { mdLinks } = require('.');
 
 const isAbsolutePath = (route) => path.isAbsolute(route);
 const convertAbsolute = (route) => (isAbsolutePath(route) ? route : path.resolve(route));
@@ -41,11 +41,20 @@ const extractLinks = (content, file, validate = false) => {
   return Promise.all(linkPromises);
 };
 
+const showStats = (links) => {
+  const totalLinks = links.length;
+  const uniqueLinks = new Set(links.map(link => link.href));
+
+  console.log('Estadísticas:');
+  console.log('Total de enlaces:', totalLinks);
+  console.log('Enlaces únicos:', uniqueLinks.size);
+};
+
 module.exports = {
   isAbsolutePath,
   convertAbsolute,
   isValidMdFile,
   readFileContent,
   extractLinks,
-  mdLinks,
+  showStats,
 };
