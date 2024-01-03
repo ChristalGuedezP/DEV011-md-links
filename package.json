@@ -1,5 +1,5 @@
 {
-  "name": "md-links",
+  "name": "md-linksplus",
   "version": "0.1.0",
   "engines": {
     "node": ">=16.x"
@@ -13,6 +13,7 @@
     "test": "jest --coverage"
   },
   "devDependencies": {
+    "ed-grid": "^3.0.2",
     "jest": "^29.7.0"
   },
   "dependencies": {
@@ -30,6 +31,6 @@
   "author": "Christal Guédez",
   "license": "ISC",
   "bin": {
-    "md-links": "./src/cli.js"
+    "md-links": "src/cli.js"
   }
 }

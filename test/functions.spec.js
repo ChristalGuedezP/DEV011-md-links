@@ -1,5 +1,6 @@
 const path = require('path');
-const { isAbsolutePath, convertAbsolute, isValidMdFile, readFileContent, extractLinks } = require('../src/functions');
+const axios = require('axios');
+const { isAbsolutePath, convertAbsolute, isValidMdFile, readFileContent, extractLinks, showStats } = require('../src/functions');
 
 describe('isAbsolutePath', () => {
   test('should return true for absolute path', () => {
@@ -31,7 +32,7 @@ describe('isValidMdFile', () => {
   });
   describe('readFileContent', () => {
     test('should read content from an existing file', () => {
-      const filePath = 'C:\\Users\\chris\\OneDrive\\Documentos\\DEV011-md-links\\src\\pruebas.md';
+      const filePath = './src/pruebas.md';
   
       return readFileContent(filePath).then(content => {
         const expectedContent = [
@@ -57,5 +58,56 @@ describe('isValidMdFile', () => {
       return expect(readFileContent(nonExistingFilePath)).rejects.toThrowError('ENOENT: no such file or directory');
     });
   });
- 
-});
+  describe('showStats', () => {
+    test('should display correct statistics for links', () => {
+      // Mock data for testing
+      const links = [
+        { href: 'https://example.com/page1', text: 'Page 1' },
+        { href: 'https://example.com/page2', text: 'Page 2' },
+        { href: 'https://example.com/page1', text: 'Page 1' },
+        { href: 'https://example.com/page3', text: 'Page 3' },
+      ];
+  
+      // Mock console.log to capture the output
+      const consoleLogSpy = jest.spyOn(console, 'log');
+      consoleLogSpy.mockImplementation(() => {});
+  
+      // Call the function
+      showStats(links);
+  
+      // Assertions
+      expect(consoleLogSpy).toHaveBeenCalledWith('Estadísticas:');
+      expect(consoleLogSpy).toHaveBeenCalledWith('Total de enlaces:', links.length);
+  
+      const uniqueLinks = new Set(links.map(link => link.href));
+      expect(consoleLogSpy).toHaveBeenCalledWith('Enlaces únicos:', uniqueLinks.size);
+  
+      // Restore console.log
+      consoleLogSpy.mockRestore();
+    });
+  });
+  describe('extractLinks', () => {
+    it('should extract links with validation', async () => {
+      // Contenido y archivo de ejemplo
+      const content = '[Ejemplo 1](https://example.com/1)\n[Ejemplo 2](https://example.com/2)';
+      const file = 'example.md';
+  
+      // Simula la respuesta de axios.head sin realizar una solicitud HTTP real
+      const mockedAxiosHead = jest.fn((url) => Promise.resolve({ status: 200 }));
+      axios.head = mockedAxiosHead;
+  
+      // Llama a la función extractLinks con validación
+      const links = await extractLinks(content, file, true);
+  
+      // Verifica que los enlaces sean los esperados
+      expect(links).toEqual([
+        { text: 'Ejemplo 1', href: 'https://example.com/1', file, status: 200, ok: 'ok' },
+        { text: 'Ejemplo 2', href: 'https://example.com/2', file, status: 200, ok: 'ok' },
+      ]);
+  
+      // Verifica que axios.head haya sido llamado correctamente
+      expect(mockedAxiosHead).toHaveBeenCalledWith('https://example.com/1');
+      expect(mockedAxiosHead).toHaveBeenCalledWith('https://example.com/2');
+    });
+  });
+  });
