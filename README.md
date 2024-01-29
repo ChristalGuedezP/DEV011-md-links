@@ -14,7 +14,7 @@
 <pre><code class="has-line-data" data-line-start="22" data-line-end="24" class="language-sh">npm i md-linksplus
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="25" data-line-end="28"><strong>¿Cómo usar</strong><br>
+<p class="has-line-data" data-line-start="25" data-line-end="28"><strong>¿Cómo usar?</strong><br>
 Proporciona la ruta al archivo <code>.md</code>.<br>
 Llama a la función y explora los enlaces organizados.</p>
 </blockquote>
